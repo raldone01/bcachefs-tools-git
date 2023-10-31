@@ -1,23 +1,40 @@
+# Maintainer: Frederik Schwan <freswa at archlinux dot org>
+# Contributor: Jelle van der Waa <jelle@archlinux.org>
+
 pkgname=bcachefs-tools
+epoch=3
 pkgver=1.2
 pkgrel=1
-pkgdesc="BCacheFS filesystem utilities"
-url="https://github.com/koverstreet/bcachefs-tools"
-arch=("x86_64")
-license=("GPL2")
+pkgdesc='BCacheFS filesystem utilities'
+arch=('x86_64')
+url='https://bcachefs.org/'
+license=('GPL2')
 depends=(util-linux)
-makedepends=(cargo git pkgconf libsodium libaio util-linux-libs
-             lz4 liburcu zstd keyutils valgrind llvm clang)
+makedepends=(
+  cargo
+  clang
+  libkeyutils.so keyutils
+  libaio.so libaio
+  libsodium.so libsodium
+  liburcu
+  llvm
+  lz4
+  pkgconf
+  libblkid.so libuuid.so util-linux-libs
+  valgrind
+  libz.so zlib
+  libzstd.so zstd
+)
 source=("${pkgname}-${pkgver}.tar.gz"::https://github.com/koverstreet/bcachefs-tools/archive/refs/tags/v${pkgver}.tar.gz)
-sha256sums=('2f7b68576303bcbb80ea6c4042aa27b1b1027739f3de68106ca9166963e161dc')
+b2sums=('3cf7cc36c6e489b460af46ce37920a0bfed450943e886bfa056b9cf4d1051dc2c627617d37068aa6b6436aa779c180428b0910b5871acb248ccee85416a283c2')
 
 build() {
-  cd "${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   make
 }
 
 package() {
-  cd "${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   make DESTDIR="$pkgdir" PREFIX="/usr" ROOT_SBINDIR="/usr/bin" \
        INITRAMFS_DIR="/etc/initcpio" install
 }
