@@ -3,8 +3,8 @@
 
 pkgname=bcachefs-tools
 epoch=3
-pkgver=1.3.1
-pkgrel=2
+pkgver=1.3.3
+pkgrel=1
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
 url='https://bcachefs.org/'
@@ -32,15 +32,8 @@ makedepends=(
 )
 source=(
   "${pkgname}-${pkgver}.tar.gz"::https://github.com/koverstreet/bcachefs-tools/archive/refs/tags/v${pkgver}.tar.gz
-  https://github.com/koverstreet/bcachefs-tools/commit/a0371350efecbc09ca24864a414eee2d7c691c34.patch
 )
-b2sums=('a1d54feefecc6fb0fcae73e81dd7afbd65302573918e7fdad7a2a74566590fee666dbb7c99af5de069ff5fcfe746baf74f4889bbebf547f6b29b1944e0253993'
-        '0c00206ab5c4cdbdba2a4bd73b72b19fd9e335518399fa933670785f17166f41b6b33ad12b84d5e7591ef0ee2cb4e18b5cad4e42d516f450b0cd85bb181aa1a5')
-
-prepare() {
-  cd ${pkgname}-${pkgver}
-  patch -Np1 < ../a0371350efecbc09ca24864a414eee2d7c691c34.patch
-}
+b2sums=('887d46264f7425966374679288dfeaff48b8db658ef44f0bd65d782a6cea92e2f824cf474dc74e99a338676a3c67158fe03b60b88172cc310094a84135e91474')
 
 build() {
   cd ${pkgname}-${pkgver}
