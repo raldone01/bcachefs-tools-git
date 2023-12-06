@@ -4,7 +4,7 @@
 pkgname=bcachefs-tools
 epoch=3
 pkgver=1.3.5
-pkgrel=2
+pkgrel=3
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
 url='https://bcachefs.org/'
@@ -48,7 +48,7 @@ package() {
   rm -rf "${pkgdir}"/etc
 
   # package completions
-  install -dm644 "${pkgdir}"/usr/share/{bash-completion/completions,fish/vendor_completions.d,zsh/site-functions}
+  install -dm755 "${pkgdir}"/usr/share/{bash-completion/completions,fish/vendor_completions.d,zsh/site-functions}
   "${pkgdir}"/usr/bin/bcachefs completions bash > "${pkgdir}"/usr/share/bash-completion/completions/bcachefs
   "${pkgdir}"/usr/bin/bcachefs completions fish > "${pkgdir}"/usr/share/fish/vendor_completions.d/bcachefs.fish
   "${pkgdir}"/usr/bin/bcachefs completions zsh > "${pkgdir}"/usr/share/zsh/site-functions/_bcachefs
