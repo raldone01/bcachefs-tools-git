@@ -3,7 +3,7 @@
 
 pkgname=bcachefs-tools
 epoch=3
-pkgver=1.3.6
+pkgver=1.4.0
 pkgrel=1
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
@@ -34,7 +34,7 @@ makedepends=(
 source=(
   "${pkgname}-${pkgver}.tar.gz"::https://github.com/koverstreet/bcachefs-tools/archive/refs/tags/v${pkgver}.tar.gz
 )
-b2sums=('9a005e79b3956f745958d56e5053f1085fef0c30bac3e3be2c1cf79a24bfe43b1bdf14ce9ec036c88c1b4e85da7b07e6b08ebc7e08cf8db11b15e0a88aa53065')
+b2sums=('c972de13e305b07910ab4acdfea05df85bfe70ed350dea5fb578a150a9e116f054dc99bf6dd185aa26dab799832939276a6248203717b918c1d7e0e9f2e0fdd9')
 
 build() {
   cd ${pkgname}-${pkgver}
