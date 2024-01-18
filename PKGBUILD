@@ -4,7 +4,7 @@
 pkgname=bcachefs-tools
 epoch=3
 pkgver=1.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
 url='https://bcachefs.org/'
@@ -38,13 +38,23 @@ b2sums=('7be0a343758a221a39dad5eca1c11c74d049e208712d30ffdfd919c97ef87e561983b85
 
 build() {
   cd ${pkgname}-${pkgver}
-  BCACHEFS_FUSE=1 make
+  make
+  BCACHEFS_FUSE=1 make \
+    LIBEXECDIR=/usr/lib \
+    DESTDIR="${pkgdir}" \
+    ROOT_SBINDIR="/usr/bin" \
+    INITRAMFS_DIR="/etc/initcpio"
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  make DESTDIR="${pkgdir}" PREFIX="/usr" ROOT_SBINDIR="/usr/bin" \
-       INITRAMFS_DIR="/etc/initcpio" install
+  BCACHEFS_FUSE=1 make \
+    PREFIX="/usr" \
+    LIBEXECDIR=/usr/lib \
+    DESTDIR="${pkgdir}" \
+    ROOT_SBINDIR="/usr/bin" \
+    INITRAMFS_DIR="/etc/initcpio" \
+    install
   # remove initcpio hooks that seems incompatible with mkinitcpio
   rm -rf "${pkgdir}"/etc
 
