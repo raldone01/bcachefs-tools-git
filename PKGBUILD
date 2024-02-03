@@ -8,7 +8,7 @@ pkgrel=2
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
 url='https://bcachefs.org/'
-license=('GPL2')
+license=('GPL-2.0-only')
 depends=(
   bash
   fuse3
