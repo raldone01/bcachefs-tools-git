@@ -38,6 +38,11 @@ b2sums=('7be0a343758a221a39dad5eca1c11c74d049e208712d30ffdfd919c97ef87e561983b85
 
 build() {
   cd ${pkgname}-${pkgver}
+
+  # this uses malloc_usable_size, which is incompatible with fortification level 3
+  export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+  export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+
   make
   BCACHEFS_FUSE=1 make \
     LIBEXECDIR=/usr/lib \
@@ -48,6 +53,11 @@ build() {
 
 package() {
   cd ${pkgname}-${pkgver}
+
+  # this uses malloc_usable_size, which is incompatible with fortification level 3
+  export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+  export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+
   BCACHEFS_FUSE=1 make \
     PREFIX="/usr" \
     LIBEXECDIR=/usr/lib \
