@@ -1,7 +1,7 @@
 pkgbase = bcachefs-tools
 	pkgdesc = BCacheFS filesystem utilities
 	pkgver = 1.6.4
-	pkgrel = 1
+	pkgrel = 2
 	epoch = 3
 	url = https://bcachefs.org/
 	arch = x86_64

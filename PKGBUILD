@@ -4,7 +4,7 @@
 pkgname=bcachefs-tools
 epoch=3
 pkgver=1.6.4
-pkgrel=1
+pkgrel=2
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
 url='https://bcachefs.org/'
@@ -43,7 +43,6 @@ build() {
   export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
   export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
-  make
   BCACHEFS_FUSE=1 make \
     LIBEXECDIR=/usr/lib \
     DESTDIR="${pkgdir}" \
