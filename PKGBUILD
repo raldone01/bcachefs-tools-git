@@ -4,7 +4,7 @@
 pkgname=bcachefs-tools
 epoch=3
 pkgver=1.9.1
-pkgrel=1
+pkgrel=2
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
 url='https://bcachefs.org/'
@@ -31,6 +31,7 @@ makedepends=(
   pkgconf
   valgrind
 )
+options=(!lto)
 source=(
   "${pkgname}-${pkgver}.tar.gz"::https://github.com/koverstreet/bcachefs-tools/archive/refs/tags/v${pkgver}.tar.gz
 )
