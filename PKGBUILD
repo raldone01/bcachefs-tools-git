@@ -48,7 +48,7 @@ build() {
     LIBEXECDIR=/usr/lib \
     DESTDIR="${pkgdir}" \
     ROOT_SBINDIR="/usr/bin" \
-    INITRAMFS_DIR="/etc/initcpio"
+    INITRAMFS_DIR="/usr/lib/initcpio/"
 }
 
 package() {
@@ -63,10 +63,14 @@ package() {
     LIBEXECDIR=/usr/lib \
     DESTDIR="${pkgdir}" \
     ROOT_SBINDIR="/usr/bin" \
-    INITRAMFS_DIR="/etc/initcpio" \
+    INITRAMFS_DIR="/usr/lib/initcpio/" \
     install
-  # remove initcpio hooks that seems incompatible with mkinitcpio
-  rm -rf "${pkgdir}"/etc
+
+  # replace incompatible initcpio hooks
+  rm -rf "${pkgdir}"/usr/lib/initcpio/*
+  install -dm755 "${pkgdir}"/usr/lib/initcpio/{hooks,install}
+  install -Dm644 arch/etc/initcpio/hooks/bcachefs "${pkgdir}"/usr/lib/initcpio/hooks/
+  install -Dm644 arch/etc/initcpio/install/bcachefs "${pkgdir}"/usr/lib/initcpio/install/
 
   # package completions
   install -dm755 "${pkgdir}"/usr/share/{bash-completion/completions,fish/vendor_completions.d,zsh/site-functions}
