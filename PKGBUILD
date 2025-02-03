@@ -3,7 +3,7 @@
 
 pkgname=bcachefs-tools
 epoch=3
-pkgver=1.13.0
+pkgver=1.20.0
 pkgrel=1
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
@@ -35,16 +35,17 @@ options=(!lto)
 source=(
   "${pkgname}-${pkgver}.tar.gz"::https://github.com/koverstreet/bcachefs-tools/archive/refs/tags/v${pkgver}.tar.gz
 )
-b2sums=('0f952094089367de4d83a91fc60bfce7b6f624f9af469b3e5fc579e05d13c915325db198d2cc058a2886c99a03f2e9ef9361942130bc68c8f7884f34cd484755')
+b2sums=('8b06c5c1c0c1198cef4a1f02fc8d6a3d60357d3c88e2d3dbcf2929213e45d0eec4561b1527ec86fffccc458e8909601951038c18a3e32cb9e22dc60551fc8922')
 
 build() {
   cd ${pkgname}-${pkgver}
 
   # this uses malloc_usable_size, which is incompatible with fortification level 3
+  # https://github.com/koverstreet/bcachefs-tools/issues/237
   export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
   export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
-  BCACHEFS_FUSE=1 make \
+  make \
     LIBEXECDIR=/usr/lib \
     DESTDIR="${pkgdir}" \
     ROOT_SBINDIR="/usr/bin" \
@@ -55,10 +56,11 @@ package() {
   cd ${pkgname}-${pkgver}
 
   # this uses malloc_usable_size, which is incompatible with fortification level 3
+  # https://github.com/koverstreet/bcachefs-tools/issues/237
   export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
   export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
-  BCACHEFS_FUSE=1 make \
+  make \
     PREFIX="/usr" \
     LIBEXECDIR=/usr/lib \
     DESTDIR="${pkgdir}" \
