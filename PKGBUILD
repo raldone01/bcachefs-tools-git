@@ -3,7 +3,7 @@
 
 pkgname=bcachefs-tools
 epoch=3
-pkgver=1.25.1
+pkgver=1.25.2
 pkgrel=1
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
@@ -35,7 +35,7 @@ options=(!lto)
 source=(
   "${pkgname}-${pkgver}.tar.gz"::https://github.com/koverstreet/bcachefs-tools/archive/refs/tags/v${pkgver}.tar.gz
 )
-b2sums=('b43d4a3d086270387f75292c480ca135ac5cfb1b1634f36e0371db5357af2943291747df717b230ea0892eabe60dd67c33fd38197199085e4fab4d980f4376ba')
+b2sums=('11fe3893901d6e4fc7e647e8377b206eedd9f6438cc711255e498f148a2302a0d6dd7f0b62f6f9c6024e37fb4168bc4b56090e10639e622f560bcba9188c147e')
 
 build() {
   cd ${pkgname}-${pkgver}
