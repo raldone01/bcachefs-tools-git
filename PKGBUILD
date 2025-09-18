@@ -5,7 +5,7 @@ pkgbase=bcachefs-tools
 pkgname=(bcachefs-tools bcachefs-dkms)
 epoch=3
 pkgver=1.31.1
-pkgrel=1
+pkgrel=2
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
 url='https://bcachefs.org/'
@@ -76,6 +76,9 @@ package_bcachefs-tools() {
   install -dm755 "${pkgdir}"/usr/lib/initcpio/{hooks,install}
   install -Dm644 arch/etc/initcpio/hooks/bcachefs "${pkgdir}"/usr/lib/initcpio/hooks/
   install -Dm644 arch/etc/initcpio/install/bcachefs "${pkgdir}"/usr/lib/initcpio/install/
+
+  # remove dkms module from the main package
+  rm -rf "${pkgdir}"/usr/src
 
   # package completions
   install -dm755 "${pkgdir}"/usr/share/{bash-completion/completions,fish/vendor_completions.d,zsh/site-functions}
