@@ -4,7 +4,7 @@
 pkgbase=bcachefs-tools
 pkgname=(bcachefs-tools bcachefs-dkms)
 epoch=3
-pkgver=1.31.2
+pkgver=1.31.3
 pkgrel=1
 pkgdesc='BCacheFS filesystem utilities'
 arch=('x86_64')
@@ -38,7 +38,7 @@ options=(!lto)
 source=(
   git+https://github.com/koverstreet/bcachefs-tools.git#tag=v${pkgver}
 )
-b2sums=('0b0572aa6c4572d1d31f038e0679bb208ad502d44389d0932003c67e8f56b0875f678061606e8854deee6c7a650f59a98d679bcace805f8f1b1e1bef539b3323')
+b2sums=('f9beb510ae82ebcd22bf09fa3acd851f0f3ecdb3e2518b3ff7a0a55e78787a1586c97978767e9a1b86dcd95ac5da4970f61ff70f01dd728b8e0d969517a0af80')
 
 build() {
   cd ${pkgname}
