@@ -1,6 +1,6 @@
 pkgbase = bcachefs-tools
 	pkgdesc = BCacheFS filesystem utilities
-	pkgver = 1.31.12
+	pkgver = 1.31.13
 	pkgrel = 1
 	epoch = 3
 	url = https://bcachefs.org/
@@ -35,8 +35,8 @@ pkgbase = bcachefs-tools
 	depends = systemd-libs
 	depends = udev
 	options = !lto
-	source = git+https://github.com/koverstreet/bcachefs-tools.git#tag=v1.31.12
-	b2sums = 968211d7d45b4a14842742bd0140ee6a3cc8f059de9c8aab277ab83240af24e40e40d767d5c6c035dbd009789ed55218cec0bb8f57c3de5ca78fc3e79dc2a9c1
+	source = git+https://github.com/koverstreet/bcachefs-tools.git#tag=v1.31.13
+	b2sums = 60a5f983ab948cedb4c75bde8dee809342b5022816e50fba70051e95b9224d54c621e4868bcf95acc0dbe3ebd88d1bbd798be6048aeb5614dc30cc83a2923950
 
 pkgname = bcachefs-tools
 
