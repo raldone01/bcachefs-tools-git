@@ -1,12 +1,12 @@
-# Maintainer: Frederik Schwan <freswa at archlinux dot org>
-# Contributor: Jelle van der Waa <jelle@archlinux.org>
+# Maintainer: raldone01 <raldone01 at gmail dot com>
+# Contributor: Frederik Schwan <freswa at archlinux dot org>; Jelle van der Waa <jelle@archlinux.org>
 
-pkgbase=bcachefs-tools
-pkgname=(bcachefs-tools bcachefs-dkms)
-epoch=3
-pkgver=1.33.3
+_pkgname=bcachefs-tools
+pkgbase=bcachefs-tools-git
+pkgname=(bcachefs-tools-git bcachefs-dkms-git)
+pkgver=1.34.0.r1.g572c71f5
 pkgrel=1
-pkgdesc='BCacheFS filesystem utilities'
+pkgdesc='BCacheFS filesystem utilities (Git version)'
 arch=('x86_64')
 url='https://bcachefs.org/'
 license=('GPL-2.0-only')
@@ -35,13 +35,44 @@ makedepends=(
   valgrind
 )
 options=(!lto)
-source=(
-  git+https://github.com/koverstreet/bcachefs-tools.git#tag=v${pkgver}
-)
-b2sums=('babc8ba0bbed24a95be29115f01fbf991087e4246a2b8a331662aefc42bcca56ad4e55a168fa27e262d51bc817d3a4d9f325bff50f285dec0ad4467bd4a171c6')
+
+# Configuration:
+# Set exactly one of the following variables to pin a version.
+# Leave all empty to build the latest master.
+_tag= # for example v1.34.0
+_branch=
+_commit=
+
+_url="git+https://evilpiepirate.org/git/bcachefs-tools.git"
+
+if [[ -n "$_tag" && -z "$_branch" && -z "$_commit" ]]; then
+    source=("${_url}#tag=${_tag}")
+elif [[ -z "$_tag" && -n "$_branch" && -z "$_commit" ]]; then
+    source=("${_url}#branch=${_branch}")
+elif [[ -z "$_tag" && -z "$_branch" && -n "$_commit" ]]; then
+    source=("${_url}#commit=${_commit}")
+elif [[ -z "$_tag" && -z "$_branch" && -z "$_commit" ]]; then
+    source=("${_url}")
+else
+    error "Configuration Error: Only one of _tag, _branch, or _commit may be set at a time."
+    exit 1
+fi
+
+b2sums=('SKIP')
+
+pkgver() {
+  cd "${_pkgname}"
+  # Generate version based on git tags (e.g., 1.3.3.r10.g123456)
+  git describe --long --tags 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+  cd "${_pkgname}"
+  # If you need to apply patches, do it here
+}
 
 build() {
-  cd ${pkgname}
+  cd "${_pkgname}"
 
   # this uses malloc_usable_size, which is incompatible with fortification level 3
   # https://github.com/koverstreet/bcachefs-tools/issues/237
@@ -55,8 +86,11 @@ build() {
     INITRAMFS_DIR="/usr/lib/initcpio/"
 }
 
-package_bcachefs-tools() {
-  cd ${pkgname}
+package_bcachefs-tools-git() {
+  provides=("${_pkgname}=${pkgver}")
+  conflicts=("${_pkgname}")
+
+  cd "${_pkgname}"
 
   # this uses malloc_usable_size, which is incompatible with fortification level 3
   # https://github.com/koverstreet/bcachefs-tools/issues/237
@@ -87,11 +121,13 @@ package_bcachefs-tools() {
   "${pkgdir}"/usr/bin/bcachefs completions zsh > "${pkgdir}"/usr/share/zsh/site-functions/_bcachefs
 }
 
-package_bcachefs-dkms() {
-  depends=(
-    dkms
-  )
-  cd ${pkgbase}
+package_bcachefs-dkms-git() {
+  pkgdesc="BCacheFS filesystem kernel module (DKMS) (Git version)"
+  depends=(dkms)
+  provides=("bcachefs-dkms=${pkgver}")
+  conflicts=("bcachefs-dkms")
+
+  cd "${_pkgname}"
 
   make \
     PREFIX="/usr" \
